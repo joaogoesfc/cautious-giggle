@@ -1,11 +1,11 @@
-FROM python:3
+FROM python:3.12
 
-WORKDIR /usr/src/app
+WORKDIR /code
 
-COPY requirements.txt ./
-RUN pip install "fastapi[standard]"
+COPY ./requirements.txt /code/requirements.txt
 
-COPY . .
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 EXPOSE 80
-CMD ["uvicorn", "main:app", "--host", "127.0.0.1", "--port", "80"]
+COPY . .
+CMD ["fastapi", "run", "main.py", "--port", "80"]
